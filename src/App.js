@@ -6,27 +6,18 @@ import Todos from "./components/Todos";
 import Header from "./components/layout/Header";
 import AddTodo from "./components/AddTodo";
 import About from "./components/pages/About";
+import Axios from "axios";
 
 export default class App extends Component {
   state = {
-    todos: [
-      {
-        id: uuid.v4(),
-        title: "Movie One",
-        completed: false
-      },
-      {
-        id: uuid.v4(),
-        title: "Movie Two",
-        completed: true
-      },
-      {
-        id: uuid.v4(),
-        title: "Movie Three",
-        completed: true
-      }
-    ]
+    todos: []
   };
+
+  componentDidMount() {
+    Axios.get(
+      "https://jsonplaceholder.typicode.com/todos?_limit=10"
+    ).then(res => this.setState({ todos: res.data }));
+  }
 
   markComplete = id => {
     this.setState({
@@ -44,12 +35,12 @@ export default class App extends Component {
   };
 
   addTodo = title => {
-    const newTodo = {
-      id: uuid.v4(),
+    Axios.post("https://jsonplaceholder.typicode.com/todos", {
       title,
       completed: false
-    };
-    this.setState({ todos: [...this.state.todos, newTodo] });
+    }).then(res => (
+      this.setState({ todos: [...this.state.todos, res.data] })
+    ));
   };
 
   render() {
