@@ -21,7 +21,7 @@ export default class TodoItem extends Component {
           onChange={this.props.markComplete.bind(this, id)}
         />
         {" " + title}
-        <button style={btnStyle} onClick={this.props.delItem.bind(this, id)}>
+        <button style={btnStyle} onClick={this.props.delTodo.bind(this, id)}>
           x
         </button>
       </div>
@@ -31,7 +31,9 @@ export default class TodoItem extends Component {
 
 // PropTypes
 TodoItem.propTypes = {
-  todo: PropTypes.object.isRequired
+  todo: PropTypes.object.isRequired,
+  markComplete: PropTypes.func.isRequired,
+  delTodo: PropTypes.func.isRequired
 };
 
 // btn style

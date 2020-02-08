@@ -28,19 +28,19 @@ export default class App extends Component {
     });
   };
 
-  delItem = id => {
-    this.setState({
-      todos: [...this.state.todos.filter(todo => id !== todo.id)]
-    });
+  delTodo = id => {
+    Axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`).then(res =>
+      this.setState({
+        todos: [...this.state.todos.filter(todo => id !== todo.id)]
+      })
+    );
   };
 
   addTodo = title => {
     Axios.post("https://jsonplaceholder.typicode.com/todos", {
       title,
       completed: false
-    }).then(res => (
-      this.setState({ todos: [...this.state.todos, res.data] })
-    ));
+    }).then(res => this.setState({ todos: [...this.state.todos, res.data] }));
   };
 
   render() {
@@ -58,7 +58,7 @@ export default class App extends Component {
                   <Todos
                     todos={this.state.todos}
                     markComplete={this.markComplete}
-                    delItem={this.delItem}
+                    delTodo={this.delTodo}
                   />
                 </React.Fragment>
               )}
